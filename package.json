@@ -1,0 +1,26 @@
+{
+  "name": "node-breakpoint-download",
+  "version": "1.0.0",
+  "description": "node breakpoint download",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "node",
+    "breakpoint",
+    "download",
+    "request",
+    "http"
+  ],
+  "author": "folgerfan",
+  "license": "ISC",
+  "dependencies": {
+    "fs-extra": "^8.0.1",
+    "mocha": "^6.1.4",
+    "request": "^2.88.0"
+  },
+  "devDependencies": {
+    "md5-file": "^4.0.0"
+  }
+}
