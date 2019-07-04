@@ -9,7 +9,6 @@
 
 ## 思路
 
-
 首先往资源发起一个请求，设置headers Range 为 `bytes=0-1`，可以获得资源响应的header，判断其中`accept-ranges`的值是否为`bytes`，有则支持断点下载。同时还能通过`content-range`获得资源的整体大小。
 
 判断本地文件是否存在，存在则获取大小判断是否下载完成。不存在则本地文件大小视为0。
@@ -38,6 +37,42 @@ downStream = request(
 
 返回的流，可以用来中断下载。需要重新下载时，重新走一遍上面流程。根据大小判断下载完成。若已知md5，再校验下载文件的md5和已知的md5是否一致。
 
-[代码地址](https://github.com/folger-fan)
+## 代码示例
+```
+const path = require('path')
+const createDownloadTask = require("../index");
+const tmpdir = path.join(__dirname, "down");
+createDownloadTask({
+    url:
+      "https://folger-1251685788.cos.ap-guangzhou.myqcloud.com/blog/breakpoint/downloadtest.txt",//50M
+    md5: "c8c3085051e21d57e13d6544b7bbb832",
+    filename: "test1.txt",
+    tmpdir
+  }).then(function(task) {
+    task.emit("start");
+    let st;
+    task
+      .on("totalSize", function({ totalSize }) {
+        // console.log("get total size", totalSize);
+      })
+      .on("progress", function({ percent }) {
+        // console.log("on progress", percent);
+      })
+      .on("end", function({ filepath }) {
+        console.log("on end", filepath);
+        clearInterval(st);
+      })
+      .on("error", function(err) {
+        console.log("on error", err);
+        clearInterval(st);
+      })
+      .on("abort", function() {
+        console.log("on abort");
+      });
 
-具体使用可参考test/test.js中的[测试代码](https://github.com/folger-fan/node-breakpoint-download/blob/master/test/test.js)。
+    st = setInterval(function() {
+      task.emit("stop");
+      task.emit("start");
+    }, 2000);
+  });
+```
