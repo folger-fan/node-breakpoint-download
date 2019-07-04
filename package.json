@@ -1,5 +1,5 @@
 {
-  "name": "node-breakpoint-download",
+  "name": "breakpoint-download",
   "version": "1.0.0",
   "description": "node breakpoint download",
   "main": "index.js",
@@ -22,5 +22,16 @@
   },
   "devDependencies": {
     "mocha": "^6.1.4"
-  }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/folger-fan/node-breakpoint-download.git"
+  },
+  "bugs": {
+    "url": "https://github.com/folger-fan/node-breakpoint-download/issues"
+  },
+  "homepage": "https://github.com/folger-fan/node-breakpoint-download#readme"
 }
