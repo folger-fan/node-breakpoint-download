@@ -113,7 +113,6 @@ async function createDownloadTask({
               Math.floor((10000 * localSize) / totalSize) / 100 || 0;
             emitter.emit("progress", { percent, localSize, totalSize });
             if (totalSize === localSize) {
-              console.log("download complete", ended);
               if (fileWrite) {
                 fileWrite.end();
                 fileWrite = null;
